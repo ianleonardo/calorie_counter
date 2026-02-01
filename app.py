@@ -15,8 +15,8 @@ GOOGLE_API_KEY = None
 
 # Priority 1: Check OS Environment (Works for Local + .env)
 # We check this FIRST to avoid triggering the Streamlit error locally
-if os.getenv("GOOGLE_API_KEY"):
-    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if os.getenv("_GOOGLE_API_KEY"):
+    GOOGLE_API_KEY = os.getenv("_GOOGLE_API_KEY")
 
 # Priority 2: Check Streamlit Secrets (Works for Streamlit Cloud)
 # We use a try-except block because accessing st.secrets crashes if no file exists
@@ -35,7 +35,7 @@ if not GOOGLE_API_KEY:
 if not GOOGLE_API_KEY:
     st.error("❌ API Key Missing. Please set GOOGLE_API_KEY in a .env file or Streamlit secrets.")
     st.stop()
-    
+
 # --- TRANSLATIONS (Updated with Profile Fields) ---
 TRANSLATIONS = {
     "English": {
