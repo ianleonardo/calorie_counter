@@ -4,14 +4,38 @@ from google.genai import types
 from google.genai.errors import ClientError
 from PIL import Image
 import json
-from tenacity import retry, stop_after_attempt, wait_fixed
+import os
+from dotenv import load_dotenv
 
-# --- Configuration ---
-if "GOOGLE_API_KEY" in st.secrets:
-    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-else:
-    GOOGLE_API_KEY = "AIzaSyDT9DnFrnptH15ldy0WMPwMwnf6Ngfs3ic"
+# Load environment variables from .env file
+load_dotenv()
 
+# --- Robust API Key Loading ---
+GOOGLE_API_KEY = None
+
+# Priority 1: Check OS Environment (Works for Local + .env)
+# We check this FIRST to avoid triggering the Streamlit error locally
+if os.getenv("GOOGLE_API_KEY"):
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Priority 2: Check Streamlit Secrets (Works for Streamlit Cloud)
+# We use a try-except block because accessing st.secrets crashes if no file exists
+if not GOOGLE_API_KEY:
+    try:
+        if "GOOGLE_API_KEY" in st.secrets:
+            GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    except FileNotFoundError:
+        # This happens if secrets.toml doesn't exist. We just ignore it.
+        pass
+    except Exception:
+        # Catch other Streamlit specific errors (like StreamlitSecretNotFoundError)
+        pass
+
+# Final Check: If we still don't have a key, stop the app
+if not GOOGLE_API_KEY:
+    st.error("❌ API Key Missing. Please set GOOGLE_API_KEY in a .env file or Streamlit secrets.")
+    st.stop()
+    
 # --- TRANSLATIONS (Updated with Profile Fields) ---
 TRANSLATIONS = {
     "English": {
