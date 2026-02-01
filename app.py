@@ -66,7 +66,7 @@ if uploaded_file is not None:
     raw_image = Image.open(uploaded_file)
     image = process_image(raw_image)
     
-    st.image(image, width=300)
+    st.image(image, caption="Uploaded Image", use_container_width=True)
     
     if st.button("Analyze Meal"):
         with st.spinner("Analyzing nutrition..."):
