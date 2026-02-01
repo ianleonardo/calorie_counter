@@ -10,7 +10,7 @@ from tenacity import retry, stop_after_attempt, wait_fixed
 if "GOOGLE_API_KEY" in st.secrets:
     GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 else:
-    GOOGLE_API_KEY = "YOUR_API_KEY"
+    GOOGLE_API_KEY = "AIzaSyDT9DnFrnptH15ldy0WMPwMwnf6Ngfs3ic"
 
 # --- TRANSLATIONS (Updated with Profile Fields) ---
 TRANSLATIONS = {
