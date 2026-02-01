@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 from PIL import Image
 import json
 from tenacity import retry, stop_after_attempt, wait_fixed # New: For auto-retries
@@ -48,7 +48,7 @@ def get_calorie_info(image):
 
 # --- UI Layout ---
 st.set_page_config(page_title="AI Calorie Estimator", page_icon="🥗")
-st.header("🥗 AI Nutritionist (Cloud Ready)")
+st.header("🥗 AI Nutritionist")
 
 uploaded_file = st.file_uploader("Upload your meal", type=["jpg", "jpeg", "png"])
 
