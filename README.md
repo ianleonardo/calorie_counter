@@ -1,4 +1,4 @@
-# calorie_counter
+# Calorie Counter
 Build simple web to estimate Calories based on the uploaded image
 
 # Prepare Environment
