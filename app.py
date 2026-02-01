@@ -176,7 +176,7 @@ def process_image(image):
     image.thumbnail((1024, 1024))
     return image
 
-@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+# @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def get_calorie_info(image, diet_goal, diet_type, language):
     client = genai.Client(api_key=GOOGLE_API_KEY)
     
