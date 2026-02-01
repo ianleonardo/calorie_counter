@@ -44,7 +44,7 @@ def get_calorie_info(image):
     # 3. Call the new API method
     # Note: The new SDK handles PIL images automatically in the 'contents' list
     response = client.models.generate_content(
-        model="gemini-2.0-flash", # Updated to latest standard model
+        model="gemini-flash-latest", # Updated to latest standard model
         contents=[sys_instruction, image],
         config=types.GenerateContentConfig(
             response_mime_type="application/json" # Enforce JSON output natively
