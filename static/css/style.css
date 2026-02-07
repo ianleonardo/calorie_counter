@@ -1,0 +1,310 @@
+/* Custom styles for AI Health Coach */
+
+/* Smooth transitions */
+* {
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Health score colors */
+.health-score-excellent {
+    color: #059669; /* green-600 */
+}
+
+.health-score-good {
+    color: #d97706; /* amber-600 */
+}
+
+.health-score-poor {
+    color: #dc2626; /* red-600 */
+}
+
+/* Progress bar animation */
+@keyframes progressFill {
+    from {
+        width: 0%;
+    }
+}
+
+.progress-fill {
+    animation: progressFill 1s ease-out;
+}
+
+/* Hover effects */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Toast notifications */
+.toast-success {
+    background-color: #10b981;
+    color: white;
+}
+
+.toast-error {
+    background-color: #ef4444;
+    color: white;
+}
+
+.toast-warning {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.toast-info {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* Image upload area */
+.upload-area {
+    border: 2px dashed #d1d5db;
+    transition: border-color 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #10b981;
+}
+
+.upload-area.dragover {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+/* Button styles */
+.btn-primary {
+    background: linear-gradient(135deg, #059669, #14b8a6);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #047857, #0d9488);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Form inputs */
+.form-input {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Metric cards */
+.metric-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Compliance badge */
+.compliance-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.compliance-compliant {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.compliance-non-compliant {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Food item tags */
+.food-tag {
+    display: inline-block;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .metric-card {
+        padding: 16px;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation for results appearing */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom checkbox and radio styles */
+input[type="radio"]:checked + span {
+    color: #059669;
+    font-weight: 500;
+}
+
+input[type="radio"]:focus {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+}
+
+/* Sidebar sticky positioning */
+.sidebar-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+/* Loading overlay */
+.loading-overlay {
+    backdrop-filter: blur(4px);
+}
+
+/* Progress bar styling */
+.progress-container {
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #059669, #14b8a6);
+    height: 100%;
+    transition: width 1s ease-out;
+}
+
+/* Toast container */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Image preview styling */
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Burn time cards */
+.burn-time-card {
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.burn-time-card:hover {
+    transform: scale(1.05);
+}
+
+/* Analysis text styling */
+.analysis-text {
+    line-height: 1.6;
+    color: #374151;
+}
+
+.suggestion-text {
+    font-style: italic;
+    color: #059669;
+}
