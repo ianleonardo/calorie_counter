@@ -15,3 +15,6 @@ Open it and paste your key like this:
 GOOGLE_API_KEY=AIzaSyD...YourKeyHere...
 
 Important: Add .env to your .gitignore file so you don't accidentally upload this file to GitHub!
+
+Streamlit Cloud URL: https://ian-calorie-counter.streamlit.app/
+Google Cloud URL: 

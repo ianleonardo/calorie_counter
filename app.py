@@ -13,6 +13,7 @@ load_dotenv()
 # --- Robust API Key Loading ---
 GOOGLE_API_KEY = None
 
+
 # Priority 1: Check OS Environment (Works for Local + .env)
 # We check this FIRST to avoid triggering the Streamlit error locally
 if os.getenv("GOOGLE_API_KEY"):
