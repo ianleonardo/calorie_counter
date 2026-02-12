@@ -38,5 +38,8 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
-    app.run(debug=debug_mode, host='0.0.0.0', port=5001)
+    # Get the port from the environment variable, defaulting to 8080
+    port = int(os.environ.get("PORT", 8080))
+    
+    # Bind to 0.0.0.0 and use the dynamic port
+    app.run(host='0.0.0.0', port=port)
