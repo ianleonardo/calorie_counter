@@ -120,7 +120,7 @@ class HealthCoach {
         }
     }
 
-    processImageFile(file) {
+    async processImageFile(file) {
         // Validate file type
         const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!validTypes.includes(file.type)) {
@@ -134,9 +134,41 @@ class HealthCoach {
             return;
         }
 
-        this.selectedImage = file;
-        this.displayImagePreview(file);
+        // Resize image client-side for faster upload and processing
+        const resizedFile = await this.resizeImage(file);
+        this.selectedImage = resizedFile;
+        this.displayImagePreview(resizedFile);
         this.enableAnalyzeButton();
+    }
+
+    resizeImage(file, maxSize = 1024) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                URL.revokeObjectURL(img.src);
+                // Skip resize if already small enough
+                if (img.width <= maxSize && img.height <= maxSize) {
+                    resolve(file);
+                    return;
+                }
+                const canvas = document.createElement('canvas');
+                const scale = maxSize / Math.max(img.width, img.height);
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+                }, 'image/jpeg', 0.85);
+            };
+            img.src = URL.createObjectURL(file);
+        });
+    }
+
+    convertMarkdownBold(text) {
+        // Escape HTML first to prevent XSS, then convert **text** to <strong>
+        const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     }
 
     displayImagePreview(file) {
@@ -263,7 +295,9 @@ class HealthCoach {
         }
 
         if (impactMessage) {
-            impactMessage.textContent = this.translations.impact_msg.replace('{pct}', result.meal_impact_pct);
+            impactMessage.innerHTML = this.convertMarkdownBold(
+                this.translations.impact_msg.replace('{pct}', result.meal_impact_pct)
+            );
         }
     }
 
@@ -342,13 +376,13 @@ class HealthCoach {
         // Analysis text
         const analysisText = document.getElementById('analysis-text');
         if (analysisText) {
-            analysisText.textContent = result.analysis;
+            analysisText.innerHTML = this.convertMarkdownBold(result.analysis);
         }
 
         // Suggestion text
         const suggestionText = document.getElementById('suggestion-text');
         if (suggestionText) {
-            suggestionText.textContent = result.suggestion;
+            suggestionText.innerHTML = this.convertMarkdownBold(result.suggestion);
         }
     }
 
