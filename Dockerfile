@@ -16,4 +16,4 @@ EXPOSE 8080
 # 6. Run the application
 # We explicitly set the server address to 0.0.0.0 (required for external access)
 # and the port to 8080 (required by Cloud Run)
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "--threads", "8", "--timeout", "0", "app:create_app()"]
