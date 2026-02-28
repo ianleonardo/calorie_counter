@@ -53,3 +53,15 @@ def logout():
     session.pop('user', None)
     session.pop('user_profile', None)
     return redirect(url_for('auth.login'))
+
+
+@auth_bp.route('/privacy')
+def privacy():
+    """Show the privacy policy page."""
+    return render_template('privacy.html')
+
+
+@auth_bp.route('/terms')
+def terms():
+    """Show the terms of service page."""
+    return render_template('terms.html')
