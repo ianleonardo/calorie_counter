@@ -3,7 +3,6 @@
 class HealthCoach {
     constructor() {
         this.translations = window.translations || {};
-        this.currentLanguage = window.currentLanguage || 'English';
         this.selectedImage = null;
         this.init();
     }
@@ -14,13 +13,6 @@ class HealthCoach {
     }
 
     setupEventListeners() {
-        // Language selector
-        const languageSelect = document.getElementById('language-select');
-        if (languageSelect) {
-            languageSelect.addEventListener('change', (e) => {
-                this.changeLanguage(e.target.value);
-            });
-        }
 
         // Profile form changes
         const profileForm = document.getElementById('profile-form');
@@ -76,16 +68,12 @@ class HealthCoach {
         }
     }
 
-    changeLanguage(language) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('lang', language);
-        window.location.href = currentUrl.toString();
-    }
+
 
     async calculateDailyTarget() {
         try {
             const formData = new FormData(document.getElementById('profile-form'));
-            formData.append('language', this.currentLanguage);
+
 
             // Debug: Log form data being sent
             console.log('Daily target calculation - form data:');

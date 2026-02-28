@@ -1,6 +1,7 @@
 from flask import Flask
 import os
 from dotenv import load_dotenv
+from authlib.integrations.flask_client import OAuth
 
 # Load environment variables
 load_dotenv()
@@ -17,8 +18,22 @@ def create_app():
     # Create upload folder if it doesn't exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
+    # Configure OAuth
+    oauth = OAuth(app)
+    oauth.register(
+        name='google',
+        client_id=os.getenv('GOOGLE_CLIENT_ID'),
+        client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={'scope': 'openid email profile'},
+    )
+    # Store oauth in app extensions so controllers can access it
+    app.extensions['oauth'] = oauth
+    
     # Register blueprints
+    from controllers.auth_controller import auth_bp
     from controllers.main_controller import main_bp
+    app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     
     # Error handlers
@@ -43,3 +58,4 @@ if __name__ == '__main__':
     
     # Bind to 0.0.0.0 and use the dynamic port
     app.run(host='0.0.0.0', port=port)
+

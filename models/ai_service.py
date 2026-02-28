@@ -24,17 +24,17 @@ class AIService:
         image.thumbnail((1024, 1024))
         return image
     
-    def get_nutrition_analysis(self, image, diet_goal, diet_type, language):
+    def get_nutrition_analysis(self, image, diet_goal, diet_type):
         """
         Get nutrition analysis from Google Gemini AI.
         """
         client = genai.Client(api_key=self.api_key)
         
         sys_instruction = f"""
-        You are an expert Personal Nutritionist speaking {language}.
+        You are an expert Personal Nutritionist speaking English.
         User Profile: Goal={diet_goal}, Diet={diet_type}.
 
-        Analyze the food image. Respond in {language} for text fields.
+        Analyze the food image. Respond in English for text fields.
         Return ONLY JSON:
         {{
             "food_items": ["item1", "item2"],
@@ -43,8 +43,8 @@ class AIService:
             "health_score": 0,  
             "burn_off": {{ "walking": 0, "running": 0, "swimming": 0 }},
             "is_diet_compliant": true, 
-            "analysis": "Brief analysis in {language}.",
-            "suggestion": "One specific tip in {language}."
+            "analysis": "Brief analysis in English.",
+            "suggestion": "One specific tip in English."
         }}
         """
         

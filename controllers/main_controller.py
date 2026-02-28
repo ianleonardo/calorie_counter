@@ -10,6 +10,7 @@ from models.user_profile import UserProfile, NutritionResult
 from models.calculator import CalorieCalculator
 from models.ai_service import AIService
 from models.translations import Translations
+from controllers.auth_controller import login_required
 
 main_bp = Blueprint('main', __name__)
 
@@ -20,27 +21,25 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @main_bp.route('/')
+@login_required
 def index():
-    """Main page with language selection and profile form."""
-    language = request.args.get('lang', 'English')
-    translations = Translations.get_translation(language)
+    """Main page with profile form."""
+    translations = Translations.get_translation('English')
     
     # Get user profile from session or use defaults
     profile = session.get('user_profile', {})
     
     return render_template('index.html', 
                          translations=translations,
-                         language=language,
-                         available_languages=Translations.get_available_languages(),
                          profile=profile)
 
 @main_bp.route('/analyze', methods=['POST'])
+@login_required
 def analyze():
     """Handle image upload and nutrition analysis."""
     try:
         # Get form data with validation
-        language = request.form.get('language', 'English')
-        translations = Translations.get_translation(language)
+        translations = Translations.get_translation('English')
         
         # Debug: Log received form data
         current_app.logger.info(f"Received form data: {dict(request.form)}")
@@ -118,7 +117,7 @@ def analyze():
         ai_service = AIService()
         processed_image = ai_service.process_image(image)
         analysis_data = ai_service.get_nutrition_analysis(
-            processed_image, profile.goal, profile.diet_type, language
+            processed_image, profile.goal, profile.diet_type
         )
         
         # Create nutrition result
@@ -178,6 +177,7 @@ def analyze():
             }), 500
 
 @main_bp.route('/update_profile', methods=['POST'])
+@login_required
 def update_profile():
     """Update user profile in session."""
     try:
@@ -213,8 +213,7 @@ def update_profile():
         session['user_profile'] = profile
         
         # Calculate and return daily target
-        language = request.form.get('language', 'English')
-        translations = Translations.get_translation(language)
+        translations = Translations.get_translation('English')
         
         # Handle index lookup with error handling
         try:
