@@ -104,6 +104,25 @@
             Sign in with Google
         </a>
 
+        <!-- Or divider -->
+        <div class="my-5">
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-200"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white text-gray-400 rounded-full">or</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guest Login Button -->
+        <a href="{{ url_for('auth.guest_login') }}"
+            class="google-btn inline-flex items-center justify-center w-full px-6 py-3.5 bg-gray-50 border border-gray-300 rounded-xl text-gray-600 font-medium shadow-sm hover:bg-gray-100">
+            <i class="fas fa-user mr-3 text-gray-400"></i>
+            Continue as Guest
+        </a>
+
         <!-- Footer -->
         <p class="mt-8 text-xs text-gray-400">
             By signing in you agree to our

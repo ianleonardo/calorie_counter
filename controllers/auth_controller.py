@@ -47,6 +47,17 @@ def google_callback():
     return redirect(url_for('main.index'))
 
 
+@auth_bp.route('/auth/guest')
+def guest_login():
+    """Log in as a guest without Google OAuth."""
+    session['user'] = {
+        'name': 'Guest',
+        'email': '',
+        'picture': '',
+    }
+    return redirect(url_for('main.index'))
+
+
 @auth_bp.route('/logout')
 def logout():
     """Clear session and redirect to login."""
